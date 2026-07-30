@@ -11,7 +11,7 @@
 # | Edet, Donald Anthony | 22/EG/CO/1789
 # | Adeniyi,Taiwo Okikiola | 22/EG/CO/1719
 # | Abraham, Unwana Emmanuel| 22/EG/CO/1669
-# | Full Name | Reg No. 
+# | Ushie Divine kipeh| 22/EG/CO/1769
 # | Full Name | Reg No. 
 # | Full Name | Reg No. 
 # | Full Name | Reg No. 

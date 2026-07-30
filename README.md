@@ -14,6 +14,6 @@
 # | Ushie Divine kipeh| 22/EG/CO/1769
 # | Iwok, Emmanuel Aniedi| 22/EG/CO/1739
 # | Friday, Success Essien| 22/EG/CO/1819
-# | Full Name | Reg No. 
+# | George, Victor Solomon| 22/EG/CO/1639 
 
 

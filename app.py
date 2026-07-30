@@ -3,7 +3,7 @@ import streamlit as st
 import tensorflow as tf
 from PIL import Image
 
-MODEL_PATH = "models/efficientnet_transfer_best"
+MODEL_PATH = "models/efficientnet_transfer_best.keras"
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
 CLASS_NAMES = ["Non-cracked", "Cracked"]  # label flip applied during training: 0=Non-cracked, 1=Cracked

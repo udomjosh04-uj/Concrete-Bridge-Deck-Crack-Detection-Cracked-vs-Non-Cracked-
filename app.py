@@ -2,11 +2,12 @@ import numpy as np
 import streamlit as st
 import tensorflow as tf
 from PIL import Image
+ import pandas as pd
 
 MODEL_PATH = "models/efficientnet_transfer_best.keras"
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
-CLASS_NAMES = ["Cracked", "Non-cracked"]
+CLASS_NAMES = ["Non-cracked", "Cracked"]  # label flip applied during training: 0=Non-cracked, 1=Cracked
 CONFIDENCE_FLAG_THRESHOLD = 0.65
 
 
@@ -24,33 +25,24 @@ def preprocess_image(image: Image.Image) -> np.ndarray:
 
 def predict(model, image: Image.Image):
     batch = preprocess_image(image)
-
-    # Model output (assumed to be probability of Cracked)
     prob_cracked = float(model.predict(batch, verbose=0)[0][0])
     prob_noncracked = 1.0 - prob_cracked
 
-    # Correct class prediction
     if prob_cracked >= 0.5:
-        predicted_class = "Cracked"
+        predicted_class = CLASS_NAMES[1]
         confidence = prob_cracked
     else:
-        predicted_class = "Non-cracked"
+        predicted_class = CLASS_NAMES[0]
         confidence = prob_noncracked
 
-    class_probs = {
-        "Cracked": prob_cracked,
-        "Non-cracked": prob_noncracked,
+    return predicted_class, confidence, {
+        CLASS_NAMES[0]: prob_noncracked,
+        CLASS_NAMES[1]: prob_cracked,
     }
-
-    return predicted_class, confidence, class_probs
 
 
 def main():
-    st.set_page_config(
-        page_title="Concrete Deck Crack Classifier",
-        layout="centered",
-    )
-
+    st.set_page_config(page_title="Concrete Deck Crack Classifier", layout="centered")
     st.title("Concrete Deck Crack Classifier")
     st.write("Classifies a bridge deck concrete image as Cracked or Non-cracked.")
 
@@ -60,10 +52,7 @@ def main():
         st.error(f"Could not load model from '{MODEL_PATH}': {e}")
         st.stop()
 
-    uploaded_file = st.file_uploader(
-        "Upload a concrete deck image",
-        type=["jpg", "jpeg", "png", "webp"],
-    )
+    uploaded_file = st.file_uploader("Upload a concrete deck image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is None:
         st.stop()
@@ -75,19 +64,22 @@ def main():
         predicted_class, confidence, class_probs = predict(model, image)
 
     st.subheader("Result")
-    st.write(f"**Predicted class:** {predicted_class}")
-    st.write(f"**Confidence:** {confidence:.1%}")
+    st.write(f"Predicted class: **{predicted_class}**")
+    st.write(f"Confidence: **{confidence:.1%}**")
 
     if confidence < CONFIDENCE_FLAG_THRESHOLD:
         st.warning("Low confidence prediction.")
 
-    st.subheader("Class probabilities")
-    st.bar_chart(class_probs)
+   
 
-    with st.expander("Details"):
-        st.write(f"Input size: {IMAGE_WIDTH} × {IMAGE_HEIGHT}")
-        st.write(f"Model: {MODEL_PATH}")
-        st.json({k: round(v, 4) for k, v in class_probs.items()})
+    st.subheader("Class probabilities")
+    prob_df = pd.DataFrame(
+        {"probability": [class_probs[CLASS_NAMES[0]], class_probs[CLASS_NAMES[1]]]},
+        index=CLASS_NAMES,
+    )
+    st.bar_chart(prob_df, use_container_width=True)
+
+
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@
 # | Umanah, Ananambiet pius| 22/EG/CO/1709 
 # | Akang, Iniabasi Anietie| 22/EG/CO/1809 
 # | Ufot Prince-aniekan Emmanuel  | 22/EG/CO/1749 
-# | Full Name | Reg No. 
+# | promise aniekanabasi udoekpo | 22/EG/CO/1799
 # | Full Name | Reg No. 
 # | Full Name | Reg No. 
 # | Full Name | Reg No. 

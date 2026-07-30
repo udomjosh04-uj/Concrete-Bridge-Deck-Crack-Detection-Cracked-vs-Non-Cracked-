@@ -13,7 +13,7 @@
 # | Abraham, Unwana Emmanuel| 22/EG/CO/1669
 # | Ushie Divine kipeh| 22/EG/CO/1769
 # | Iwok, Emmanuel Aniedi| 22/EG/CO/1739
-# | Full Name | Reg No. 
+# | Friday, Success Essien| 22/EG/CO/1819
 # | Full Name | Reg No. 
 
 

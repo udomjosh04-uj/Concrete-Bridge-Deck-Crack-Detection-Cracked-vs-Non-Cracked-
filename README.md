@@ -1,7 +1,7 @@
 # Concrete-Bridge-Deck-Crack-Detection-Cracked-vs-Non-Cracked-
 
 # Contributors 
-# | Full Name | Reg No. 
+# | Udom, Joshua Sunday| 22/EG/CO/1729
 # | Full Name | Reg No. 
 # | Full Name | Reg No. 
 # | Full Name | Reg No. 

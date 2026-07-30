@@ -12,7 +12,7 @@
 # | Adeniyi,Taiwo Okikiola | 22/EG/CO/1719
 # | Abraham, Unwana Emmanuel| 22/EG/CO/1669
 # | Ushie Divine kipeh| 22/EG/CO/1769
-# | Full Name | Reg No. 
+# | Iwok, Emmanuel Aniedi| 22/EG/CO/1739
 # | Full Name | Reg No. 
 # | Full Name | Reg No. 
 

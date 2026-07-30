@@ -35,8 +35,9 @@ def predict(model, image: Image.Image):
         confidence = prob_noncracked
 
     return predicted_class, confidence, {
-        CLASS_NAMES[1]: prob_noncracked,
         CLASS_NAMES[0]: prob_cracked,
+        CLASS_NAMES[1]: prob_noncracked,
+        
     }
 
 

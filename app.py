@@ -6,7 +6,7 @@ from PIL import Image
 MODEL_PATH = "models/efficientnet_transfer_best.keras"
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
-CLASS_NAMES = ["Cracked", "Non-cracked"] 
+CLASS_NAMES = ["Cracked", "Non-cracked"]
 CONFIDENCE_FLAG_THRESHOLD = 0.65
 
 
@@ -24,25 +24,33 @@ def preprocess_image(image: Image.Image) -> np.ndarray:
 
 def predict(model, image: Image.Image):
     batch = preprocess_image(image)
+
+    # Model output (assumed to be probability of Cracked)
     prob_cracked = float(model.predict(batch, verbose=0)[0][0])
     prob_noncracked = 1.0 - prob_cracked
 
+    # Correct class prediction
     if prob_cracked >= 0.5:
-        predicted_class = CLASS_NAMES[1]
+        predicted_class = "Cracked"
         confidence = prob_cracked
     else:
-        predicted_class = CLASS_NAMES[0]
+        predicted_class = "Non-cracked"
         confidence = prob_noncracked
 
-    return predicted_class, confidence, {
-        CLASS_NAMES[0]: prob_cracked,
-        CLASS_NAMES[1]: prob_noncracked,
-        
+    class_probs = {
+        "Cracked": prob_cracked,
+        "Non-cracked": prob_noncracked,
     }
+
+    return predicted_class, confidence, class_probs
 
 
 def main():
-    st.set_page_config(page_title="Concrete Deck Crack Classifier", layout="centered")
+    st.set_page_config(
+        page_title="Concrete Deck Crack Classifier",
+        layout="centered",
+    )
+
     st.title("Concrete Deck Crack Classifier")
     st.write("Classifies a bridge deck concrete image as Cracked or Non-cracked.")
 
@@ -52,7 +60,10 @@ def main():
         st.error(f"Could not load model from '{MODEL_PATH}': {e}")
         st.stop()
 
-    uploaded_file = st.file_uploader("Upload a concrete deck image", type=["jpg", "jpeg", "png", "webp"])
+    uploaded_file = st.file_uploader(
+        "Upload a concrete deck image",
+        type=["jpg", "jpeg", "png", "webp"],
+    )
 
     if uploaded_file is None:
         st.stop()
@@ -64,8 +75,8 @@ def main():
         predicted_class, confidence, class_probs = predict(model, image)
 
     st.subheader("Result")
-    st.write(f"Predicted class: **{predicted_class}**")
-    st.write(f"Confidence: **{confidence:.1%}**")
+    st.write(f"**Predicted class:** {predicted_class}")
+    st.write(f"**Confidence:** {confidence:.1%}")
 
     if confidence < CONFIDENCE_FLAG_THRESHOLD:
         st.warning("Low confidence prediction.")
@@ -74,7 +85,7 @@ def main():
     st.bar_chart(class_probs)
 
     with st.expander("Details"):
-        st.write(f"Input size: {IMAGE_WIDTH}x{IMAGE_HEIGHT}")
+        st.write(f"Input size: {IMAGE_WIDTH} × {IMAGE_HEIGHT}")
         st.write(f"Model: {MODEL_PATH}")
         st.json({k: round(v, 4) for k, v in class_probs.items()})
 

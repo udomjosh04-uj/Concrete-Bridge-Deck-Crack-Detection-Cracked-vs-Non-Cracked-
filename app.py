@@ -52,7 +52,7 @@ def main():
         st.error(f"Could not load model from '{MODEL_PATH}': {e}")
         st.stop()
 
-    uploaded_file = st.file_uploader("Upload a concrete deck image", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Upload a concrete deck image", type=["jpg", "jpeg", "png","webp"])
 
     if uploaded_file is None:
         st.stop()

@@ -6,7 +6,7 @@ from PIL import Image
 MODEL_PATH = "models/efficientnet_transfer_best.keras"
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
-CLASS_NAMES = ["Non-cracked", "Cracked"]  # label flip applied during training: 0=Non-cracked, 1=Cracked
+CLASS_NAMES = ["Cracked", "Non-cracked"] 
 CONFIDENCE_FLAG_THRESHOLD = 0.65
 
 
@@ -35,8 +35,8 @@ def predict(model, image: Image.Image):
         confidence = prob_noncracked
 
     return predicted_class, confidence, {
-        CLASS_NAMES[0]: prob_noncracked,
-        CLASS_NAMES[1]: prob_cracked,
+        CLASS_NAMES[1]: prob_noncracked,
+        CLASS_NAMES[0]: prob_cracked,
     }
 
 

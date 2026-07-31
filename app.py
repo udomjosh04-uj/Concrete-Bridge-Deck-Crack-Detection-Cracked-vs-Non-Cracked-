@@ -31,3 +31,24 @@ def load_model():
         st.stop()
 
 model = load_model()
+
+uploaded = st.file_uploader(
+    "Upload a concrete surface image",
+    type=["jpg", "jpeg", "png", "webp"]
+)
+
+if uploaded is not None:
+    img = Image.open(uploaded).convert("RGB")
+    img = img.resize((IMG_SIZE, IMG_SIZE))
+    arr = np.array(img).astype(np.float32) / 255.0
+    pred = model.predict(arr[None, ...], verbose=0)[0, 0]
+    label = "Cracked" if pred >= 0.5 else "Non-cracked"
+
+    st.image(
+        img,
+        caption=f"Prediction: {label} (probability={pred:.3f})",
+        use_container_width=True
+    )
+    st.info(
+        "Confirm any flagged crack with a qualified inspector before taking any action."
+    )

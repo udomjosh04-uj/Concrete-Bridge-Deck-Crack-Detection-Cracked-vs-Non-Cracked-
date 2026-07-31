@@ -37,3 +37,11 @@ if uploaded is not None:
     arr = np.array(img).astype(np.float32) / 255.0
     pred = model.predict(arr[None, ...], verbose=0)[0, 0]
     label = "Cracked" if pred >= 0.5 else "Non-cracked"
+    st.image(
+        img,
+        caption=f"Prediction: {label} (probability={pred:.3f})",
+        use_container_width=True
+    )
+    st.info(
+        "Confirm any flagged crack with a qualified inspector before taking any action."
+    )

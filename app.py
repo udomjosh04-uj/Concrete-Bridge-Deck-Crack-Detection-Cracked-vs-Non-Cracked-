@@ -1,86 +1,33 @@
-import numpy as np
+import os
+import requests
 import streamlit as st
+import numpy as np
 import tensorflow as tf
 from PIL import Image
-import pandas as pd
 
-MODEL_PATH = "models/efficientnet_transfer_best.keras"
-IMAGE_HEIGHT = 224
-IMAGE_WIDTH = 224
-CLASS_NAMES = ["Non-cracked", "Cracked"]  # label flip applied during training: 0=Non-cracked, 1=Cracked
-CONFIDENCE_FLAG_THRESHOLD = 0.65
+st.set_page_config(page_title="Concrete Crack Screening", layout="centered")
+st.title("Explainable Concrete Crack Screening Tool")
+st.warning(
+    "Research screening prototype. This tool does not determine structural safety, "
+    "crack severity, or replace inspection by a qualified structural engineer."
+)
 
+MODEL_PATH = "best_model.keras"
+MODEL_URL = "https://huggingface.co/Abasiofon001/concrete-crack-classifier/resolve/main/best_model.keras"
+IMG_SIZE = 224
 
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model(MODEL_PATH)
-
-
-def preprocess_image(image: Image.Image) -> np.ndarray:
-    image = image.convert("RGB").resize((IMAGE_WIDTH, IMAGE_HEIGHT))
-    array = np.array(image, dtype=np.float32)
-    array = tf.keras.applications.efficientnet.preprocess_input(array)
-    return np.expand_dims(array, axis=0)
-
-
-def predict(model, image: Image.Image):
-    batch = preprocess_image(image)
-    prob_cracked = float(model.predict(batch, verbose=0)[0][0])
-    prob_noncracked = 1.0 - prob_cracked
-
-    if prob_cracked >= 0.5:
-        predicted_class = CLASS_NAMES[1]
-        confidence = prob_cracked
-    else:
-        predicted_class = CLASS_NAMES[0]
-        confidence = prob_noncracked
-
-    return predicted_class, confidence, {
-        CLASS_NAMES[0]: prob_noncracked,
-        CLASS_NAMES[1]: prob_cracked,
-    }
-
-
-def main():
-    st.set_page_config(page_title="Concrete Deck Crack Classifier", layout="centered")
-    st.title("Concrete Deck Crack Classifier")
-    st.write("Classifies a bridge deck concrete image as Cracked or Non-cracked.")
-
     try:
-        model = load_model()
+        if not os.path.exists(MODEL_PATH):
+            with st.spinner("Downloading model..."):
+                r = requests.get(MODEL_URL, timeout=60)
+                r.raise_for_status()
+                with open(MODEL_PATH, "wb") as f:
+                    f.write(r.content)
+        return tf.keras.models.load_model(MODEL_PATH)
     except Exception as e:
-        st.error(f"Could not load model from '{MODEL_PATH}': {e}")
+        st.error(f"Failed to load model: {e}")
         st.stop()
 
-    uploaded_file = st.file_uploader("Upload a concrete deck image", type=["jpg", "jpeg", "png","webp"])
-
-    if uploaded_file is None:
-        st.stop()
-
-    image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded image", use_container_width=True)
-
-    with st.spinner("Running classification..."):
-        predicted_class, confidence, class_probs = predict(model, image)
-
-    st.subheader("Result")
-    st.write(f"Predicted class: **{predicted_class}**")
-    st.write(f"Confidence: **{confidence:.1%}**")
-
-    if confidence < CONFIDENCE_FLAG_THRESHOLD:
-        st.warning("Low confidence prediction.")
-
-   
-
-    st.subheader("Class probabilities")
-    prob_df = pd.DataFrame(
-        {"probability": [class_probs[CLASS_NAMES[0]], class_probs[CLASS_NAMES[1]]]},
-        index=CLASS_NAMES,
-    )
-    st.bar_chart(prob_df, use_container_width=True)
-
-
-
-
-if __name__ == "__main__":
-    main()
+model = load_model()

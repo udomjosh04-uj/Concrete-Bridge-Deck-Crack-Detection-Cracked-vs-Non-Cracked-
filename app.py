@@ -31,3 +31,9 @@ def load_model():
         st.stop()
 
 model = load_model()
+if uploaded is not None:
+    img = Image.open(uploaded).convert("RGB")
+    img = img.resize((IMG_SIZE, IMG_SIZE))
+    arr = np.array(img).astype(np.float32) / 255.0
+    pred = model.predict(arr[None, ...], verbose=0)[0, 0]
+    label = "Cracked" if pred >= 0.5 else "Non-cracked"

@@ -12,3 +12,22 @@ st.warning(
     "Research screening prototype. This tool does not determine structural safety, "
     "crack severity, or replace inspection by a qualified structural engineer."
 )
+MODEL_PATH = "best_model.keras"
+MODEL_URL = "https://huggingface.co/Abasiofon001/concrete-crack-classifier/resolve/main/best_model.keras"
+IMG_SIZE = 224
+
+@st.cache_resource
+def load_model():
+    try:
+        if not os.path.exists(MODEL_PATH):
+            with st.spinner("Downloading model..."):
+                r = requests.get(MODEL_URL, timeout=60)
+                r.raise_for_status()
+                with open(MODEL_PATH, "wb") as f:
+                    f.write(r.content)
+        return tf.keras.models.load_model(MODEL_PATH)
+    except Exception as e:
+        st.error(f"Failed to load model: {e}")
+        st.stop()
+
+model = load_model()

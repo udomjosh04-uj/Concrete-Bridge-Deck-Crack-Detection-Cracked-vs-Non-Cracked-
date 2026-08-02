@@ -8,7 +8,7 @@ from PIL import Image
 # CONFIG — edit these to match your actual HF repo
 # ---------------------------------------------------------------------------
 HF_REPO_ID = "Abasiofon001/Concrete_Crack_Screening"   # <-- change this
-HF_FILENAME = "best_model.keras"               # <-- change if you named it differently
+HF_FILENAME = "best_model .keras"               # <-- change if you named it differently
 IMG_SIZE = (224, 224)                          # must match training
 LABEL_MAP = {0: "Non-cracked", 1: "Cracked"}   # must match training LABEL_MAP
 DEFAULT_THRESHOLD = 0.5  # placeholder — replace with the threshold you picked

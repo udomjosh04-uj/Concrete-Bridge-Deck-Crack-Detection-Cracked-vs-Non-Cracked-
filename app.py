@@ -78,7 +78,7 @@ threshold = st.slider(
 )
 
 uploaded_file = st.file_uploader(
-    "Upload a bridge deck image", type=["jpg", "jpeg", "png"]
+    "Upload a bridge deck image", type=["jpg", "jpeg", "png", "webp"]
 )
 
 if uploaded_file is not None:

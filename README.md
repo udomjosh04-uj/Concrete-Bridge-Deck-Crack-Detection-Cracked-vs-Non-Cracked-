@@ -41,6 +41,31 @@ Adjustable prediction threshold.
 Fast inference using a pretrained deep learning model.
 
 Provide an easy-to-use web application for image classification.
+
+## Team Responsibilities
+all the data for the project was collected and submitted to  by udom, Joshua Sunday our group leader who uploaded but we all worked together to ensure it was a success in various aspects below 
+# Dataset Collection & Data Preprocessing
+Udom, Joshua Sunday
+Obot, Datoiyoabasi Samuel
+Ibokette, Mfoniso N.
+Akang, Iniabasi Anietie
+# Model Design & Training
+Joseph Edom
+Ufot Prince-Aniekan Emmanuel
+Adeniyi, Taiwo Okikiola
+# Streamlit Application Development & Deployment
+Promise Aniekanabasi Udoekpo
+Edet, Donald Anthony
+Abraham, Unwana Emmanuel
+# Testing & Performance Evaluation
+Ushie Divine Kipeh
+Iwok, Emmanuel Aniedi
+Friday, Success Essien
+# Documentation (README, Report & GitHub Repository)
+Umanah, Ananambiet Pius
+George, Victor Solomon
+Etim, Blessing Edo
+
 # Contributors 
 ## | Udom, Joshua Sunday| 22/EG/CO/1729
 ## | Obot,Datoiyoabasi Samuel|22/EG/CO/1699
@@ -202,4 +227,8 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 Set `HF_REPO_ID` in `app.py` to your Hugging Face repo before running.
-
+## Future Improvements
+Improve crack recall using better imbalance handling.
+Perform repeated group-aware cross-validation.
+Optimize classification threshold.
+Improve model robustness with additional datasets.

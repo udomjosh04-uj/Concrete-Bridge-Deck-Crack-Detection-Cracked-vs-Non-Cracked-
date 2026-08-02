@@ -1,5 +1,46 @@
 # Concrete-Bridge-Deck-Crack-Detection-Cracked-vs-Non-Cracked-
+# Overview
+Concrete Bridge Deck Crack Detection is a binary image classification project developed to automatically identify cracked and non-cracked concrete bridge deck surfaces using deep learning. The project utilizes the Deck subset of the SDNET2018 dataset and is deployed as a Streamlit web application with a trained model hosted on Hugging Face Hub.
+# Project Objectives
 
+Detect cracks on concrete bridge deck surfaces.
+
+Reduce manual inspection time.
+
+Improve inspection accuracy using deep learning.
+Models Implemented
+
+Custom Convolutional Neural Network (CNN)
+
+EfficientNetV2-B0 (Transfer Learning)
+
+The EfficientNetV2-B0 model achieved significantly better performance and was selected for deployment.
+# Technologies Used
+
+Python
+
+TensorFlow / Keras
+
+Streamlit
+
+OpenCV
+
+NumPy
+
+Matplotlib
+
+Hugging Face Hub
+# Project Features
+
+Upload bridge deck images.
+
+Predict Crack or Non-Crack.
+
+Adjustable prediction threshold.
+
+Fast inference using a pretrained deep learning model.
+
+Provide an easy-to-use web application for image classification.
 # Contributors 
 ## | Udom, Joshua Sunday| 22/EG/CO/1729
 ## | Obot,Datoiyoabasi Samuel|22/EG/CO/1699

@@ -43,7 +43,7 @@ Fast inference using a pretrained deep learning model.
 Provide an easy-to-use web application for image classification.
 
 ## Team Responsibilities
-all the data for the project was collected and submitted to  by udom, Joshua Sunday our group leader who uploaded but we all worked together to ensure it was a success in various aspects below 
+All the data for the project was collected and submitted to   udom, Joshua Sunday our group leader who uploaded but we all worked together to ensure it was a success in various aspects below 
 # Dataset Collection & Data Preprocessing
 Udom, Joshua Sunday
 Obot, Datoiyoabasi Samuel
